@@ -24,3 +24,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### AWS Credentials ###
+aws-credentials.properties
