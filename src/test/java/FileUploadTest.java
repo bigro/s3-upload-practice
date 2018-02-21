@@ -2,24 +2,21 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-public class PutObject {
-
-
-    public static void main(String[] args) throws Exception {
-
-        FileInputStream propFile = new FileInputStream( "aws-credentials.properties");
-        Properties p = new Properties(System.getProperties());
-        p.load(propFile);
-        System.setProperties(p);
+public class FileUploadTest {
+    @Test
+    public void S3にファイルをアップロードできる() throws Exception {
+        setProperty();
 
         String bucket_name = "kit-sandbox";
-        String file_path = "/Users/ooguro/Documents/git/s3-upload-practice/out/production/resources/hello.txt";
+        String file_path = getClass().getClassLoader().getResource("hello.txt").getPath();
         File file = Paths.get(file_path).toFile();
         String key_name = Paths.get(file_path).getFileName().toString();
 
@@ -34,5 +31,12 @@ public class PutObject {
             System.exit(1);
         }
         System.out.println("Done!");
+    }
+
+    private void setProperty() throws IOException {
+        FileInputStream propFile = new FileInputStream( "aws-credentials.properties");
+        Properties p = new Properties(System.getProperties());
+        p.load(propFile);
+        System.setProperties(p);
     }
 }
