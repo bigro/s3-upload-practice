@@ -26,4 +26,5 @@ AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
 ```
 
 - Java のシステムプロパティ
- -> システムプロパティで `aws.accessKeyId` と `aws.secretKey` で設定すると `SystemPropertiesCredentialsProvider` を使用してプロパティを読み込んでくれます。
+
+システムプロパティで `aws.accessKeyId` と `aws.secretKey` で設定すると `SystemPropertiesCredentialsProvider` を使用してプロパティを読み込んでくれます。
