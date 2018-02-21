@@ -13,3 +13,16 @@ S3へのファイルアップロードの練習です。
 
 ## リージョン一覧
 [AWS のリージョンとエンドポイント](https://docs.aws.amazon.com/ja_jp/general/latest/gr/rande.html)
+
+## 認証情報の設定
+[認証情報の設定](https://docs.aws.amazon.com/ja_jp/sdk-for-java/v1/developer-guide/credentials.html)
+- コードで設定
+```
+BasicAWSCredentials awsCreds = new BasicAWSCredentials("access_key_id", "secret_key_id");
+AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                        .build();
+```
+
+- Java のシステムプロパティ
+システムプロパティで `aws.accessKeyId` と `aws.secretKey` で設定すると `SystemPropertiesCredentialsProvider` を使用してプロパティを読み込んでくれます。
