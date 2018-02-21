@@ -15,17 +15,17 @@ public class FileUploadTest {
     public void S3にファイルをアップロードできる() throws Exception {
         setProperty();
 
-        String bucket_name = "kit-sandbox";
-        String file_path = getClass().getClassLoader().getResource("hello.txt").getPath();
-        File file = Paths.get(file_path).toFile();
-        String key_name = Paths.get(file_path).getFileName().toString();
+        String bucketName = "kit-sandbox";
+        String filePath = getClass().getClassLoader().getResource("hello.txt").getPath();
+        File file = Paths.get(filePath).toFile();
+        String keyName = Paths.get(filePath).getFileName().toString();
 
-        System.out.format("Uploading %s to S3 bucket %s...\n", file_path, bucket_name);
+        System.out.format("Uploading %s to S3 bucket %s...\n", filePath, bucketName);
         AmazonS3 s3 = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.AP_NORTHEAST_1)
                 .build();
         try {
-            s3.putObject(bucket_name, key_name, file);
+            s3.putObject(bucketName, keyName, file);
         } catch (AmazonServiceException e) {
             System.err.println(e.getErrorMessage());
             System.exit(1);
