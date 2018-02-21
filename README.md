@@ -10,3 +10,6 @@ S3へのファイルアップロードの練習です。
 
 ## GradleでAWS SDKを取得する
 [Gradle とともに SDK を使用する](https://docs.aws.amazon.com/ja_jp/sdk-for-java/v1/developer-guide/setup-project-gradle.html)
+
+## リージョン一覧
+[AWS のリージョンとエンドポイント](https://docs.aws.amazon.com/ja_jp/general/latest/gr/rande.html)
