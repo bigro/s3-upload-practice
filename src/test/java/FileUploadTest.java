@@ -53,6 +53,7 @@ public class FileUploadTest {
 
         TransferManager transferManager = TransferManagerBuilder
                 .standard()
+                // リージョンを指定してないと落ちるのでAmazonS3経由で設定してるが、公式では設定なしでいけてる・・・
                 .withS3Client(s3)
                 .build();
         System.out.println("Hello");
