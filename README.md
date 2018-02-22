@@ -4,7 +4,7 @@ S3へのファイルアップロードの練習です。
 [AWS SDK for Java 開発者ガイド](https://docs.aws.amazon.com/ja_jp/sdk-for-java/v1/developer-guide/welcome.html)
 
 ## 前準備
-- リポジトリをcloneして、直下に以下の内容の `aws-credentials.properties` というファイルを作成
+リポジトリをcloneして、直下に以下の内容の `aws-credentials.properties` というファイルを作成してください。
 ```
 aws.accessKeyId=[[access_key_id]] --対象のIAMのアクセスキー
 aws.secretKey=[[secret_key_id]] -- 対象のIAMのシークレットキー
