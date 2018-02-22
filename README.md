@@ -38,3 +38,9 @@ AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
 ```
 s3.putObject(bucketName, keyName, file);
 ```
+
+また、 `PutObjectRequest` でまとめて渡すことも可能です。
+```
+PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, keyName, file);
+s3.putObject(putObjectRequest);
+```
