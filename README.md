@@ -36,7 +36,7 @@ AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
 `AmazonS3#putObject` でアップロードできます。
 
 - 第一引数 -> バケット名
-- 第二引数 -> S3にアップロードした後のファイル名。 `/` 区切りにすればフルパス指定もでき、ディレクトリがなければ作成される。[オブジェクトキーとメタデータ](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/dev/UsingMetadata.html)
+- 第二引数 -> S3にアップロードした後のファイル名。 `/` 区切りにすればフルパス指定もでき、ディレクトリがなければ作成される。([オブジェクトキーとメタデータ](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/dev/UsingMetadata.html))
 - 第三引数 -> `File` クラス。 `String` もあるが、こちらはファイルそのものではなく指定した文字列をファイルの内容としてアップロードする。
 ```
 s3.putObject(bucketName, keyName, file);
