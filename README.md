@@ -3,6 +3,9 @@ S3へのファイルアップロードの練習です。
 
 [AWS SDK for Java 開発者ガイド](https://docs.aws.amazon.com/ja_jp/sdk-for-java/v1/developer-guide/welcome.html)
 
+## Amazon S3とは
+[Amazon S3とは](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/dev/Welcome.html)
+
 ## マルチパートアップロード
 マルチパートアップロード API を使用すると、大容量オブジェクトをいくつかに分けてアップロードできるようになります。
 
