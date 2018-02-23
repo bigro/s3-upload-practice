@@ -68,6 +68,7 @@ s3.putObject(putObjectRequest);
 
 ### 一時停止
 マルチパートの転送は一時停止して、転送の途中から再開することができます。
+
 [Pausing and Resuming transfers using Transfer Manager](https://aws.amazon.com/jp/blogs/developer/pausing-and-resuming-transfers-using-transfer-manager/)
 
 
