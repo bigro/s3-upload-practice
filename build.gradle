@@ -19,6 +19,7 @@ dependencyManagement {
 dependencies {
     compile 'com.amazonaws:aws-java-sdk-s3'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:3.9.0'
 }
 
 repositories {
