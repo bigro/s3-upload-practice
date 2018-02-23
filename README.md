@@ -65,3 +65,9 @@ s3.putObject(putObjectRequest);
 `AmazonS3#putObject` のように `Stream `や `String` を引数に渡すこともできますが、その場合はマルチパートアップロードになりませんでした。 `ObjectMetaData` や `TransferManagerConfiguration` の設定を追加すれば可能になるのかもしれませんが、調査できていません。
  
 `File` を引数に渡すことでマルチパートアップロードになることを確認しています。(`TransferManagerUtils#shouldUseMultipartUpload` で確認)
+
+### 一時停止
+マルチパートの転送は一時停止して、転送の途中から再開することができます。
+[Pausing and Resuming transfers using Transfer Manager](https://aws.amazon.com/jp/blogs/developer/pausing-and-resuming-transfers-using-transfer-manager/)
+
+
