@@ -61,6 +61,7 @@ public class FileUploadTest {
                 // デフォルト5Mなので6Mにしてみる
                 .withMinimumUploadPartSize(6L * Constants.MB)
                 // デフォルト16Mでmultipart.txtが約10Mなのでmultipartになるように閾値を下げておく
+                // 通常はマルチパートサイズより閾値の方が上のはず
                 .withMultipartUploadThreshold(5L * Constants.MB)
                 // リージョンを指定してないと落ちるのでAmazonS3経由で設定してるが、公式では設定なしでいけてる・・・
                 .withS3Client(s3)
