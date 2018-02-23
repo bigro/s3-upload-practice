@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.internal.Constants;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.transfer.Transfer;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
@@ -71,22 +72,22 @@ public class FileUploadTest {
 
         // 1つのpartのサイズ
         assertThat(TransferManagerUtils.calculateOptimalPartSize(putObjectRequest, transferManager.getConfiguration())).isEqualTo(6L * Constants.MB);
-        // マルチパートアップロードとして処理する必要がある
+        // マルチパートアップロードとして処理する必要があるか
         assertThat(TransferManagerUtils.shouldUseMultipartUpload(putObjectRequest, transferManager.getConfiguration())).isEqualTo(true);
-        // 並列パートアップロードを使用できる
+        // 並列パートアップロードを使用できるか
         assertThat(TransferManagerUtils.isUploadParallelizable(putObjectRequest, false)).isEqualTo(true);
 
+        // アップロード
         Upload upload = transferManager.upload(putObjectRequest);
 
-        try {
-            // Or you can block and wait for the upload to finish
-            upload.waitForCompletion();
-            System.out.println("Upload complete.");
-        } catch (AmazonClientException amazonClientException) {
-            System.out.println("Unable to upload file, upload was aborted.");
-            amazonClientException.printStackTrace();
-        }
+        // アップロード完了まで待つ
+        upload.waitForCompletion();
 
+        // 完了後のステータスがCompletedになっている
+        assertThat(upload.getState()).isEqualTo(Transfer.TransferState.Completed);
+
+        // 完了したらTransferManagerインスタンスをシャットダウンする。
+        transferManager.shutdownNow();
     }
 
     private void setProperty() throws IOException {
