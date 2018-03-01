@@ -1,14 +1,10 @@
-import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.internal.Constants;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.transfer.Transfer;
-import com.amazonaws.services.s3.transfer.TransferManager;
-import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
-import com.amazonaws.services.s3.transfer.Upload;
+import com.amazonaws.services.s3.transfer.*;
 import com.amazonaws.services.s3.transfer.internal.TransferManagerUtils;
 import org.junit.Test;
 
@@ -16,6 +12,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -88,6 +86,47 @@ public class FileUploadTest {
 
         // 完了したらTransferManagerインスタンスをシャットダウンする。
         transferManager.shutdownNow();
+    }
+
+    @Test
+    public void 複数ファイルを同時にアップロードできる() throws Exception {
+        setProperty();
+
+        String existingBucketName = "kit-sandbox";
+        File multipartFile = createFile("multipart.txt");
+        String directory = multipartFile.getParent();
+        File helloFile = new File(directory, "hello.txt");
+
+        // アプロード対象のファイルが格納されてるディレクトリのパスでFileのインスタンスを作成します。（TransferManager#uploadFileListの引数）
+        File fileDirectory = new File(directory);
+
+        // アップロード対象のFileのListを作成します。（TransferManager#uploadFileListの引数）
+        List<File> files = Arrays.asList(multipartFile, helloFile);
+
+        AmazonS3 s3 = AmazonS3ClientBuilder.standard()
+                .withRegion(Regions.AP_NORTHEAST_1)
+                .build();
+
+        TransferManager transferManager = TransferManagerBuilder
+                .standard()
+                .withS3Client(s3)
+                .build();
+
+
+        // 対象のバケット名、S3に格納するディレクトリ、アプロード対象のファイルが格納されているディレクトリの値を持ったFileインスタンス、アップロード対象のFileのリストを引数に渡します。
+        MultipleFileUpload multipleFileUpload = transferManager.uploadFileList(existingBucketName, "upload-list", fileDirectory, files);
+
+        multipleFileUpload.waitForCompletion();
+
+        // 完了後のステータスがCompletedになっている
+        assertThat(multipleFileUpload.getState()).isEqualTo(Transfer.TransferState.Completed);
+
+        transferManager.shutdownNow();
+    }
+
+    private File createFile(String fileName) {
+        String path = getClass().getClassLoader().getResource(fileName).getPath();
+        return Paths.get(path).toFile();
     }
 
     private void setProperty() throws IOException {
