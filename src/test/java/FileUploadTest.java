@@ -42,6 +42,24 @@ public class FileUploadTest {
     }
 
     @Test
+    public void ファイルなしで文字列でのアップロードができる() throws Exception {
+        setProperty();
+
+        String bucketName = "kit-sandbox";
+
+        AmazonS3 s3 = AmazonS3ClientBuilder.standard()
+                .withRegion(Regions.AP_NORTHEAST_1)
+                .build();
+        try {
+            s3.putObject(bucketName, "hello.txt", "content");
+        } catch (AmazonServiceException e) {
+            System.err.println(e.getErrorMessage());
+            System.exit(1);
+        }
+        System.out.println("Done!");
+    }
+
+    @Test
     public void S3にマルチパートアップロードができる() throws Exception {
         setProperty();
 
