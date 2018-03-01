@@ -56,6 +56,8 @@ public class FileUploadTest {
             System.err.println(e.getErrorMessage());
             System.exit(1);
         }
+
+        s3.shutdown();
         System.out.println("Done!");
     }
 
